@@ -1,0 +1,17 @@
+﻿
+
+
+
+@using zudioclone.models.Models;
+@inherits Umbraco.Cms.Web.Common.Views.UmbracoViewPage
+@using zudioclone.models.Models.Viewmodels;
+
+@{
+    Layout = "Master.cshtml";
+}
+
+
+<div>
+    @await Html.PartialAsync("blocklist/login",new LoginViewModel())
+
+</div>

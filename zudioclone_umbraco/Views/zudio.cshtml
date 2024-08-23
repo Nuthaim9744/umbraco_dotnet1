@@ -1,0 +1,23 @@
+﻿@* @using zudioclone.models.Models.PageModels;
+@inherits Umbraco.Cms.Web.Common.Views.UmbracoViewPage<Zudio>
+@using ContentModels = Umbraco.Cms.Web.Common.PublishedModels;
+@{
+	Layout = "Master.cshtml";
+	var model = Model.BlogCard;
+}
+
+
+<div>
+	<h1 class=" text-center">#ZUDIO</h1>
+	<h3 class="text-center">SHARE YOUR LOOK</h3>
+</div>
+
+<div class="blog">
+	@Html.GetBlockListHtml(Model.BlogCard)
+
+
+</div>
+ *@
+
+
+

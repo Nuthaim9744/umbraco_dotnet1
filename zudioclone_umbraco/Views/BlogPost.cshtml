@@ -1,0 +1,23 @@
+﻿
+@using zudioclone.models.Models.PageModels;
+@inherits Umbraco.Cms.Web.Common.Views.UmbracoViewPage<BlogPost>
+@{
+	Layout = "Master.cshtml";
+	var model = Model;
+}
+
+<div class="text-center">
+
+	<h1 >@Model.BlogTitle</h1>
+	<img src="@Model.Blogimage?.GetCropUrl()" alt="Alternate Text" />
+	<p>@Model.BlogDate.ToString("MM dd yyyy")</p>
+	<p>@Model.BlogContent </p>
+
+
+
+
+
+</div>
+
+
+

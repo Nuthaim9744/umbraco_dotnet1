@@ -1,0 +1,10 @@
+﻿@* @inherits Umbraco.Cms.Web.Common.Views.UmbracoViewPage<Umbraco.Cms.Core.Models.Blocks.BlockListItem>
+    @using Umbraco.Extensions
+    @using ContentModels = Umbraco.Cms.Web.Common.PublishedModels;
+    @{
+        var content = (ContentModels.BlogCards)Model.Content;
+
+    }
+ <div class="row ">
+ <div class="col-4"><img src="@content.BlogImage?.GetCropUrl()" alt=""><h5>@content.BlogTitle</h5></div>
+ </div> *@

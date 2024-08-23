@@ -1,0 +1,147 @@
+﻿@using zudioclone.models.Models.PageModels;
+@using Umbraco.Extensions;
+@inherits Umbraco.Cms.Web.Common.Views.UmbracoViewPage<Home>
+@using ContentModels = Umbraco.Cms.Web.Common.PublishedModels;
+@{
+    Layout = "Master.cshtml";
+    var model=Model;
+
+    var  blogItem = Model.Descendants<BlogPost>()
+                         .OrderByDescending(x => x.CreateDate)
+                         .Take(3);
+
+
+    var buetyItem = Model.Descendants<Buety>().FirstOrDefault();
+    var WomenItem = Model.Descendants<Women>().FirstOrDefault();
+    var menItem = Model.Descendants<Men>().FirstOrDefault();
+    var ethnicItem = Model.Descendants<Ethnic>().FirstOrDefault();
+    var KidsItem = Model.Descendants<Kids>().FirstOrDefault();
+    var LoungeItem = Model.Descendants<Lounge>().FirstOrDefault();
+    var FootwearItem = Model.Descendants<Footwear>().FirstOrDefault();
+
+
+}
+
+ <div id="carouselExampleAutoplaying"  class="carousel slide" data-bs-ride="carousel">
+
+    <div class="carousel-inner">
+
+    @foreach (var block in Model.Bannerimagehome)
+    {
+        var content = block.Content as HomeBannerImage;
+
+      
+            <div class="carousel-item active">
+                <img src="@content.Bannerimage?.GetCropUrl()" class="d-block w-100" alt="...">
+            </div>
+    }
+
+    </div>
+
+  <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleAutoplaying" data-bs-slide="prev">
+          <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+          <span class="visually-hidden">Previous</span>
+        </button>
+        <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleAutoplaying" data-bs-slide="next">
+          <span class="carousel-control-next-icon" aria-hidden="true"></span>
+          <span class="visually-hidden">Next</span>
+        </button>
+      </div>
+<h1 class="text-center" >@Model.Value("campaignTitle")</h1>
+<div class="d-flex">
+<div>
+  <div class="row">
+    <div class="col ms-5 mt-5"><img src="./images/z48.jpg" alt=""><img src="./images/z49.jpg" alt=""></div>
+
+</div>
+<div class="row">
+    <div class="col ms-5 " style="margin-top: -70px;"><img src="./images/z50.jpg" alt=""><img src="./images/z51.jpg" alt=""></div>
+    
+</div>
+  
+
+</div>
+<div class="m-5">
+  <h2>@Model.Value("homerightcontentheading")</h2>
+ 
+
+
+
+        @foreach (var block in Model.Homecontent)
+        {
+            var content = block.Content as Homerightcontent;
+            <h5 class="mt-5">@content.Contens</h5>
+           
+            
+
+        }
+
+  
+
+  
+
+</div>
+</div>
+
+
+
+<div>
+    <h1 class="text-center mt-5" >@Model.Value("blogheading")</h1>
+
+    <div class="blogohome">
+    
+    
+
+@foreach(var content in blogItem)
+
+{
+
+   <div>
+<a href="@content.Url()"><img src="@content.Blogimage?.GetCropUrl()" alt="Alternate Text" /></a>
+		<h1>@content.BlogTitle</h1>
+	</div>
+
+     
+	}
+    </div>
+
+
+    </div>
+
+<div class="card-img-overlay">
+    <ul type="none">
+        <li class="ps-5"><a href="@buetyItem.Url()">@Model.Value("beauty")</a></li>
+        <li class="ps-5"><a href="@WomenItem.Url()">@Model.Value("women")</a></li>
+        <li class="ps-5"><a href="@menItem.Url()">@Model.Value("men")</a></li>
+        <li class="ps-5"><a href="@ethnicItem.Url()">@Model.Value("ethnic")</a></li>
+        <li class="ps-5"><a href="@KidsItem.Url()">@Model.Value("kids")</a></li>
+        <li class="=ps-5 ps-5"><a href="@LoungeItem.Url()">@Model.Value("loungewear")</a></li>
+        <li class="ps-5 ps-3"><a href="@FootwearItem.Url()">@Model.Value("footwear")</a></li>
+    </ul>
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+   
+
+
+
+
+
+
+  

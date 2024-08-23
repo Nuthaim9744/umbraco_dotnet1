@@ -1,0 +1,33 @@
+﻿@using zudioclone.models.Models.PageModels;
+@inherits Umbraco.Cms.Web.Common.Views.UmbracoViewPage<BlogOverview>
+@using ContentModels = Umbraco.Cms.Web.Common.PublishedModels;
+@using Umbraco.Extensions;
+@{
+	Layout = "Master.cshtml";
+	var model = Model;
+	var blogItem = Model.Descendants<BlogPost>();
+
+}
+
+
+<div class="blogoverview">
+
+@foreach(var content in blogItem)
+
+{
+
+	<div >
+
+		<a href="@content.Url()"><img src="@content.Blogimage?.GetCropUrl()" alt="Alternate Text" /></a>
+		<h1>@content.BlogTitle</h1>
+	</div>
+}
+</div>
+
+
+
+
+
+
+
+

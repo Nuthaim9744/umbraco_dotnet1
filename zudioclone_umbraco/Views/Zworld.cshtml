@@ -1,0 +1,29 @@
+﻿@using zudioclone.models.Models.PageModels;
+@inherits Umbraco.Cms.Web.Common.Views.UmbracoViewPage<Zworld>
+@using ContentModels = Umbraco.Cms.Web.Common.PublishedModels;
+@{
+	Layout = "Master.cshtml";
+	var model=Model;
+}
+
+
+    <div  class="mb-5">
+<h1 class="text-center">@Model.Value("wHO")</h1>
+    <h5 class="text-center">@Model.Value("whoContent")</h5>
+    </div>
+    <div class="mt-5 mb-5">
+
+    <h1 class="text-center">@Model.Value("wHAT")</h1>
+    <h5 class="text-center">@Model.Value("whatContent")</h5>
+    <h5 class="text-center">@Model.Value("whatContent1")</h5>
+    </div>
+    <div class="mt-5 mb-5">
+
+      
+    <h1 class="text-center">@Model.Value("wHERE")</h1>
+    <h5 class="text-center">@Model.Value("whereContent")</h5>
+    
+    </div>
+    
+    <p>@Model.Value("aboutcontent")</p>
+    

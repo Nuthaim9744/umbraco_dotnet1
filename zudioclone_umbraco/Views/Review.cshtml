@@ -1,0 +1,83 @@
+﻿
+
+ *@ 
+@inherits Umbraco.Cms.Web.Common.Views.UmbracoViewPage
+@{
+    Layout = "Master.cshtml";
+}
+
+<h2>Complaint Reviews</h2>
+<div id="loading">Loading...</div>
+<div id="error" style="display: none; color: red;"></div>
+<table id="complaintReviewTable" style="display: none;">
+    <thead>
+        <tr>
+            <th>Name</th>
+            <th>Email</th>
+            <th>Complaint</th>
+            <th>Review</th>
+            <th>Date Submitted</th>
+        </tr>
+    </thead>
+    <tbody>
+    </tbody>
+</table>
+
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+        const tableBody = document.querySelector("#complaintReviewTable tbody");
+        const loadingElement = document.getElementById('loading');
+        const errorElement = document.getElementById('error');
+        const table = document.getElementById('complaintReviewTable');
+
+        fetch('/api/ComplaintReviewApi/GetComplaintReviews')
+            .then(response => {
+                if (!response.ok) {
+                    throw new Error('Network response was not ok: ' + response.status);
+                }
+                return response.json();
+            })
+            .then(data => {
+                console.log("Data from API:", data);
+                loadingElement.style.display = 'none';
+
+                if (Array.isArray(data) && data.length > 0) {
+                    table.style.display = 'table';
+                    data.forEach(review => {
+                        if (typeof review === 'object' && review !== null) {
+                            const row = document.createElement('tr');
+                            row.innerHTML = `
+                                    <td>${escapeHtml(review.name || '')}</td>
+                                    <td>${escapeHtml(review.email || '')}</td>
+                                    <td>${escapeHtml(review.complaint || '')}</td>
+                                    <td>${escapeHtml(review.review || '')}</td>
+                                    <td>${review.dateSubmitted ? new Date(review.dateSubmitted).toLocaleDateString() : 'N/A'}</td>
+                                `;
+                            tableBody.appendChild(row);
+                        }
+                    });
+                } else {
+                    errorElement.textContent = 'No data available.';
+                    errorElement.style.display = 'block';
+                }
+            })
+            .catch(error => {
+                console.error('Error fetching complaint reviews:', error);
+                loadingElement.style.display = 'none';
+                errorElement.textContent = 'Error loading data. Please try again later.';
+                errorElement.style.display = 'block';
+            });
+
+        function escapeHtml(unsafe) {
+            return unsafe
+                ? unsafe
+                    .replace(/&/g, "&amp;")
+                    .replace(/</g, "&lt;")
+                    .replace(/>/g, "&gt;")
+                    .replace(/"/g, "&quot;")
+                    .replace(/'/g, "&#039;")
+                : '';
+        }
+    });
+</script>
+

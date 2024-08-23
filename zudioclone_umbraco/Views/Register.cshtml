@@ -1,0 +1,17 @@
+﻿
+
+
+@using zudioclone.models.Models;
+@inherits Umbraco.Cms.Web.Common.Views.UmbracoViewPage
+@using zudioclone.models.Models.Viewmodels;
+
+@{
+    Layout = "Master.cshtml";
+}
+
+
+<div class="reg">
+
+    @await Html.PartialAsync("blocklist/register", new RegisterViewModel())
+
+</div>

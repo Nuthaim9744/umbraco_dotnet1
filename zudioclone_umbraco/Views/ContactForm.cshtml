@@ -1,0 +1,21 @@
+﻿@using zudioclone.models.Models.PageModels;
+@inherits Umbraco.Cms.Web.Common.Views.UmbracoViewPage<ContactForm>
+@using ContentModels = Umbraco.Cms.Web.Common.PublishedModels;
+@{
+    Layout = "Master.cshtml";
+    var model=Model;
+    var form = Model.ContactUs;
+}
+<div>
+     @await Umbraco.RenderMacroAsync("renderUmbracoForm", new { FormGuid = form, FormTheme = "bootstrap3-horizontal", ExcludeScripts = "1" })
+
+    
+    
+</div>
+
+
+
+
+
+
+

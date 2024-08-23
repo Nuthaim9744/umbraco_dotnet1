@@ -1,0 +1,111 @@
+﻿
+@inherits Umbraco.Cms.Web.Common.Views.UmbracoViewPage
+@{
+    Layout = "Master.cshtml";
+}
+
+<div class="complaint-review-card">
+    <h2>Submit Your Complaint or Review</h2>
+    <form id="complaintReviewForm">
+        <div class="form-group">
+            <label for="Name">Name</label>
+            <input type="text" id="Name" name="Name" required />
+            <span class="text-danger" id="NameValidationMessage"></span>
+        </div>
+        <div class="form-group">
+            <label for="Email">Email</label>
+            <input type="email" id="Email" name="Email" required />
+            <span class="text-danger" id="EmailValidationMessage"></span>
+        </div>
+        <div class="form-group">
+            <label for="Complaint">Complaint</label>
+            <textarea id="Complaint" name="Complaint"></textarea>
+            <span class="text-danger" id="ComplaintValidationMessage"></span>
+        </div>
+        <div class="form-group">
+            <label for="Review">Review</label>
+            <textarea id="Review" name="Review"></textarea>
+            <span class="text-danger" id="ReviewValidationMessage"></span>
+        </div>
+        <button  type="submit">Submit</button>
+    </form>
+    <p id="successMessage" style="display:none; color: green;">Submission successful!</p>
+    <p id="errorMessage" style="display:none; color: red;">An error occurred. Please try again.</p>
+</div>
+
+<script>
+    document.getElementById('complaintReviewForm').addEventListener('submit', function (event) {
+    event.preventDefault();
+
+    let isValid = true;
+
+    // Clear previous messages
+    document.querySelectorAll('.text-danger').forEach(function(span) {
+        span.textContent = '';
+    });
+
+    const name = document.getElementById('Name').value;
+    const email = document.getElementById('Email').value;
+    const review = document.getElementById('Review').value;
+
+    // Simple client-side validation
+    if (!name) {
+        document.getElementById('NameValidationMessage').textContent = 'Name is required';
+        isValid = false;
+    }
+
+    if (!email) {
+        document.getElementById('EmailValidationMessage').textContent = 'Email is required';
+        isValid = false;
+    } else if ((!/\S+\S+\.\S+/.test(email)) {
+        document.getElementById('EmailValidationMessage').textContent = 'Invalid email address';
+        isValid = false;
+    }
+
+    if (!review) {
+        document.getElementById('ReviewValidationMessage').textContent = 'Please enter a review';
+        isValid = false;
+    }
+
+    if (isValid) {
+        const formData = {
+            Name: name,
+            Email: email,
+            Complaint: document.getElementById('Complaint').value,
+            Review: review
+        };
+
+        fetch('/api/ComplaintReviewApi/PostComplaintReview', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(formData)
+        })
+        .then(response => response.json().then(data => ({status: response.status, body: data})))
+        .then(result => {
+            if (result.status === 200) {
+                document.getElementById('successMessage').style.display = 'block';
+                document.getElementById('errorMessage').style.display = 'none';
+                document.getElementById('complaintReviewForm').reset();
+            } else {
+                document.getElementById('errorMessage').style.display = 'block';
+                document.getElementById('successMessage').style.display = 'none';
+
+                for (let key in result.body) {
+                    document.getElementById(`${key}ValidationMessage`).textContent = result.body[key].join(', ');
+                }
+            }
+        })
+        .catch(error => {
+            document.getElementById('errorMessage').style.display = 'block';
+            document.getElementById('successMessage').style.display = 'none';
+            console.error('Error:', error);
+        });
+    }
+});
+
+
+</script>
+
+

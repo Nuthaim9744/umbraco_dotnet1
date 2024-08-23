@@ -1,0 +1,71 @@
+﻿
+@* 
+ @using zudioclone.models.Models.PageModels;
+@inherits Umbraco.Cms.Web.Common.Views.UmbracoViewPage<HeaderFooter>
+@{
+	Layout = null;
+	var model = Model;
+}
+
+
+    <footer class="bg-dark text-lg-start mt-5">
+        <!-- Copyright -->
+        <div class="text-start ps-3 bg-dark text-white" style="background-color: rgba(6, 6, 6, 0.2);">
+           @Model.Copyright
+            <a class="text-white" href="https://www.zudio.com/">@Model.Title</a>
+        </div>
+        <!-- Copyright -->
+        <div class="text-start ps-3 bg-dark text-white" style="background-color: rgba(6, 6, 6, 0.2);">
+          @Model.Fashion.
+            <a class="text-white" href="https://www.zudio.com/">@Model.Follow</a>
+        </div>
+        <!-- Contact -->
+        <div class="text-end pe-3 bg-dark text-white" style="background-color: rgba(6, 6, 6, 0.2);">
+            @Model.Contact-
+            <a class="text-white" href="https://www.zudio.com/">@Model.ContactTitle</a>
+        </div>
+        </footer/>
+ *@
+
+
+        @using zudioclone.models.Models.PageModels;
+@inherits Umbraco.Cms.Web.Common.Views.UmbracoViewPage<Home>
+  @inject Umbraco.Cms.Core.Security.IMemberManager MemberManager
+@{
+    var isuser = await MemberManager.IsMemberAuthorizedAsync(allowGroups: new[] { "Users" });
+
+}
+
+
+<footer class="bg-dark text-lg-start mt-5">
+    <!-- Copyright -->
+    <div class="text-start ps-3 bg-dark text-white" style="background-color: rgba(6, 6, 6, 0.2);">
+        @Umbraco.GetDictionaryValue("copyright")
+        <a class="text-white" href="https://www.zudio.com/">@Model.Title</a>
+    </div>
+    <!-- Fashion -->
+    <div class="text-start ps-3 bg-dark text-white" style="background-color: rgba(6, 6, 6, 0.2);">
+        @Model.Fashion
+        <a class="text-white" href="https://www.zudio.com/">@Model.Follow</a>
+    </div>
+    <!-- Contact -->
+    <div class="text-end pe-3 bg-dark text-white" style="background-color: rgba(6, 6, 6, 0.2);">
+        @Model.Contact
+        <a class="text-white" href="https://www.zudio.com/">@Model.Contacttitle</a>
+    </div>
+
+    @if (isuser)
+    {
+        <div class="text-end pe-3 bg-dark text-white" style="background-color: rgba(6, 6, 6, 0.2);">
+            ComplaintReviewbox:
+            <a class="text-white" href="/complaintreviewform">Complaints And reviews</a>
+        </div>
+
+    }
+
+
+
+
+
+    
+</footer>
